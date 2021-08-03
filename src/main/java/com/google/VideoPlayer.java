@@ -2,6 +2,7 @@ package com.google;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class VideoPlayer {
@@ -58,7 +59,10 @@ public class VideoPlayer {
   }
 
   public void playRandomVideo() {
-    System.out.println("playRandomVideo needs implementation");
+    List<Video> videos = videoLibrary.getVideos();
+    Random random = new Random();
+    Video randomVideo = videos.get(random.nextInt(videos.size()));
+    playVideo(randomVideo.getVideoId());
   }
 
   public void pauseVideo() {
