@@ -63,6 +63,10 @@ public class VideoPlayer {
 
   public void playRandomVideo() {
     List<Video> videos = videoLibrary.getVideos();
+    if (videos.isEmpty()) {
+      System.out.println("No videos available");
+      return;
+    }
     Random random = new Random();
     Video randomVideo = videos.get(random.nextInt(videos.size()));
     playVideo(randomVideo.getVideoId());
