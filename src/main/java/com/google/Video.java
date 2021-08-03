@@ -30,4 +30,23 @@ class Video {
   List<String> getTags() {
     return tags;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    str.append(title);
+    str.append(" (");
+    str.append(videoId);
+    str.append(") [");
+    boolean first = true;
+    for (String tag : tags) {
+      if (!first) {
+        str.append(" ");
+      }
+      first = false;
+      str.append(tag);
+    }
+    str.append("]");
+    return str.toString();
+  }
 }
