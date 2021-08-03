@@ -1,5 +1,9 @@
 package com.google;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class VideoPlayer {
 
   private final VideoLibrary videoLibrary;
@@ -13,7 +17,21 @@ public class VideoPlayer {
   }
 
   public void showAllVideos() {
-    System.out.println("showAllVideos needs implementation");
+    List<String> videos = videoLibrary.getVideos().stream()
+            .map(Video::toString)
+            .collect(Collectors.toList());
+    Collections.sort(videos);
+
+    StringBuilder str = new StringBuilder();
+
+    str.append("Here's a list of all available videos:");
+    for (String video : videos) {
+      str.append("\n");
+      str.append(" ");
+      str.append(video);
+    }
+
+    System.out.println(str);
   }
 
   public void playVideo(String videoId) {
