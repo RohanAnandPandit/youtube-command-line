@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 public class VideoPlayer {
 
   private final VideoLibrary videoLibrary;
+  private Video currentVideo;
 
   public VideoPlayer() {
     this.videoLibrary = new VideoLibrary();
+    currentVideo = null;
   }
 
   public void numberOfVideos() {
@@ -35,7 +37,16 @@ public class VideoPlayer {
   }
 
   public void playVideo(String videoId) {
-    System.out.println("playVideo needs implementation");
+    Video video = videoLibrary.getVideo(videoId);
+    if (video == null) {
+      System.out.println("Cannot play video: Video does not exist");
+      return;
+    }
+    if (currentVideo != null) {
+      System.out.println("Stopping video:" + currentVideo.getTitle());
+    }
+    currentVideo = video;
+    System.out.println("Playing video: " + currentVideo.getTitle());
   }
 
   public void stopVideo() {
