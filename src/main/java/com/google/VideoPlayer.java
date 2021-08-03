@@ -58,6 +58,7 @@ public class VideoPlayer {
       return;
     }
     System.out.println("Stopping video: " + currentVideo.getTitle());
+    currentVideo = null;
   }
 
   public void playRandomVideo() {
@@ -81,11 +82,30 @@ public class VideoPlayer {
   }
 
   public void continueVideo() {
-    System.out.println("continueVideo needs implementation");
+    if (currentVideo == null) {
+      System.out.println("Cannot continue video: No video is currently playing");
+      return;
+    }
+    if (!videoPaused) {
+      System.out.println("Cannot continue video: Video is not paused");
+      return;
+    }
+    videoPaused = false;
+    System.out.println("Continuing video: " + currentVideo.getTitle());
   }
 
   public void showPlaying() {
-    System.out.println("showPlaying needs implementation");
+    if (currentVideo == null) {
+      System.out.println("No video is currently playing");
+      return;
+    }
+    StringBuilder str = new StringBuilder();
+    str.append("Currently playing: ");
+    str.append(currentVideo);
+    if (videoPaused) {
+      str.append(" - PAUSED");
+    }
+    System.out.println(str);
   }
 
   public void createPlaylist(String playlistName) {
