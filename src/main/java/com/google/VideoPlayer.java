@@ -9,6 +9,7 @@ public class VideoPlayer {
 
   private final VideoLibrary videoLibrary;
   private Video currentVideo;
+  private boolean videoPaused;
 
   public VideoPlayer() {
     this.videoLibrary = new VideoLibrary();
@@ -44,9 +45,10 @@ public class VideoPlayer {
       return;
     }
     if (currentVideo != null) {
-      System.out.println("Stopping video:" + currentVideo.getTitle());
+      System.out.println("Stopping video: " + currentVideo.getTitle());
     }
     currentVideo = video;
+    videoPaused = false;
     System.out.println("Playing video: " + currentVideo.getTitle());
   }
 
@@ -66,7 +68,16 @@ public class VideoPlayer {
   }
 
   public void pauseVideo() {
-    System.out.println("pauseVideo needs implementation");
+    if (currentVideo == null) {
+      System.out.println("Cannot pause video: No video is currently playing");
+      return;
+    }
+    if (videoPaused) {
+      System.out.println("Video already paused: " + currentVideo.getTitle());
+      return;
+    }
+    videoPaused = true;
+    System.out.println("Pausing video: " + currentVideo.getTitle());
   }
 
   public void continueVideo() {
