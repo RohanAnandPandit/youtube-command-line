@@ -29,23 +29,9 @@ public class PlaylistManager {
         return "Successfully created new playlist: " + name;
     }
 
-    public String addToPlayList(String playlistName, String videoId) {
-        if (!playlistExists(playlistName)) {
-            return "Cannot add video to " + playlistName + ": Playlist does not exist";
-        }
-
-        if (videoLibrary.getVideo(videoId) == null) {
-            return "Cannot add video to " + playlistName + ": Video does not exist";
-        }
-        Video video = videoLibrary.getVideo(videoId);
+    public void addToPlayList(String playlistName, String videoId) {
         VideoPlaylist videoPlaylist = getPlaylist(playlistName);
-
-        if (videoPlaylist.containsVideo(videoId)) {
-            return "Cannot add video to " + playlistName + ": Video already added";
-        }
-
         videoPlaylist.addVideo(videoId);
-        return "Added video to " + playlistName + ": " + video.getTitle();
     }
 
     public List<String> playListNames() {
