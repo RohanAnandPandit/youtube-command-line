@@ -50,6 +50,11 @@ class Video implements Comparable<Video> {
       str.append(tag);
     }
     str.append("]");
+    if (isFlagged()) {
+      str.append(" - FLAGGED (reason: ");
+      str.append(getFlagReason());
+      str.append(")");
+    }
     return str.toString();
   }
 
@@ -69,5 +74,10 @@ class Video implements Comparable<Video> {
 
   public String getFlagReason() {
     return flagReason;
+  }
+
+  public void removeFlag() {
+    flagged = false;
+    flagReason = null;
   }
 }
