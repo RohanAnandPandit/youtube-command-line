@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** A class used to represent a video. */
-class Video {
+class Video implements Comparable<Video> {
 
   private final String title;
   private final String videoId;
@@ -48,5 +48,10 @@ class Video {
     }
     str.append("]");
     return str.toString();
+  }
+
+  @Override
+  public int compareTo(Video o) {
+    return getTitle().compareTo(o.getTitle());
   }
 }
