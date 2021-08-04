@@ -31,11 +31,6 @@ public class VideoPlayer {
             str.append("\n");
             str.append(" ");
             str.append(video);
-            if (video.isFlagged()) {
-                str.append(" - FLAGGED (reason: ");
-                str.append(video.getFlagReason());
-                str.append(")");
-            }
         }
 
         System.out.println(str);
@@ -173,10 +168,13 @@ public class VideoPlayer {
             System.out.println(" No videos here yet");
             return;
         }
-        List<String> videos = videoPlaylist.getVideosIds().stream()
+        List<Video> videos = videoPlaylist.getVideosIds().stream()
                 .map(videoLibrary::getVideo)
-                .map(Video::toString).collect(Collectors.toList());
-        videos.forEach(name -> System.out.println(" " + name));
+                .collect(Collectors.toList());
+        String str;
+        for (Video video : videos) {
+            System.out.println(video);
+        }
     }
 
     public void removeFromPlaylist(String playlistName, String videoId) {
@@ -218,6 +216,7 @@ public class VideoPlayer {
 
     public void searchVideos(String searchTerm) {
         List<Video> videos = videoLibrary.getVideos().stream()
+                .filter(video -> !video.isFlagged())
                 .filter(video -> video.getTitle().toLowerCase().contains(searchTerm.toLowerCase()))
                 .sorted().collect(Collectors.toList());
         if (videos.isEmpty()) {
@@ -241,6 +240,7 @@ public class VideoPlayer {
 
     public void searchVideosWithTag(String videoTag) {
         List<Video> videos = videoLibrary.getVideos().stream()
+                .filter(video -> !video.isFlagged())
                 .filter(video -> video.getTags().contains(videoTag.toLowerCase()))
                 .sorted().collect(Collectors.toList());
         if (videos.isEmpty()) {
@@ -285,6 +285,18 @@ public class VideoPlayer {
     }
 
     public void allowVideo(String videoId) {
-        System.out.println("allowVideo needs implementation");
+        Video video = videoLibrary.getVideo(videoId);
+        if (video == null) {
+            System.out.println("Cannot remove flag from video: Video does not exist");
+            return;
+        }
+        if (!video.isFlagged()) {
+            System.out.println("Cannot remove flag from video: Video is not flagged");
+            return;
+        }
+        video.removeFlag();
+
+        System.out.println("Successfully removed flag from video: " + video.getTitle()
+                + " (reason: " + video.getFlagReason() + ")");
     }
 }
