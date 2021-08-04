@@ -9,11 +9,14 @@ class Video implements Comparable<Video> {
   private final String title;
   private final String videoId;
   private final List<String> tags;
+  private boolean flagged;
+  private String flagReason;
 
   Video(String title, String videoId, List<String> tags) {
     this.title = title;
     this.videoId = videoId;
     this.tags = Collections.unmodifiableList(tags);
+    this.flagged = false;
   }
 
   /** Returns the title of the video. */
@@ -53,5 +56,18 @@ class Video implements Comparable<Video> {
   @Override
   public int compareTo(Video o) {
     return getTitle().compareTo(o.getTitle());
+  }
+
+  public boolean isFlagged() {
+    return flagged;
+  }
+
+  public void flag(String flagReason) {
+    flagged = true;
+    this.flagReason = flagReason;
+  }
+
+  public String getFlagReason() {
+    return flagReason;
   }
 }
