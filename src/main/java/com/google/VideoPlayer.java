@@ -123,6 +123,7 @@ public class VideoPlayer {
     public void addVideoToPlaylist(String playlistName, String videoId) {
         if (!playlistManager.playlistExists(playlistName)) {
             System.out.println("Cannot add video to " + playlistName + ": Playlist does not exist");
+            return;
         }
 
         if (videoLibrary.getVideo(videoId) == null) {
@@ -139,6 +140,7 @@ public class VideoPlayer {
 
         if (videoPlaylist.containsVideo(videoId)) {
             System.out.println("Cannot add video to " + playlistName + ": Video already added");
+            return;
         }
 
         playlistManager.addToPlayList(playlistName, videoId);
